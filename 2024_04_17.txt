@@ -1,0 +1,25 @@
+1. feladat
+db.collection.find({},
+{
+  firstName: 1,
+  lastname: 1,
+  user_id: 1,
+  _id: 0
+})
+
+2. feladat
+db.collection.find({
+  firstName: "Grace"
+},
+{
+  email: 1,
+  password: 1,
+  _id: 0
+})
+
+{likes_count: {$gt: 2}}
+{ingredients: 0, rating: 0}
+{cook_time: -1}
+
+db.receptek.find()
+db.receptek.find({likes_count: {$gt:2}}, {rating: 0}).sort({cook_time: -1})
