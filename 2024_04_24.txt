@@ -1,0 +1,34 @@
+db.movies.find({runtime: {$gte: 15}, runtime: {$lte: 20}} )
+db.movies.aggregate([{$group: {_id: "$year", atlag: {$avg: "$num_mflix_comments"}}}])
+
+neo4j sandbox
+match(p:Person)
+return p
+
+match(p:Person)
+where p.born > 1960
+return p.name,p.born
+
+match(p:Person) 
+where p.born = 1964 or p.born = 1965
+return p.name,p.born
+
+match(m:Movie)
+where m.title starts with 'A'
+return m.title, m.released
+order by m.released desc
+
+match (p:Person)-[:PRODUCED]->(m:Movie)
+where p.name = 'Joel Silver'
+return m.title
+
+match (p:Person)-[:DIRECTED]-(m:Movie)
+return p.name, count(*)
+
+match (p:Person)-[:DIRECTED]-(m:Movie)
+with p.name as nev, count(*) as db
+where db > 1
+return nev, db
+
+match(p:Person)-[:ACTED_IN]->(m:Movie)<-[:DIRECTED]-(p:Person)
+return p.name
