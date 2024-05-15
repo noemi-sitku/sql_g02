@@ -1,0 +1,81 @@
+> hset dolgozo:1 nev "Nagy Eva" munkakor titkarno
+(integer) 2
+
+> hset dolgozo:2 nev "Kiss Ilona" munkakor konyvelo
+(integer) 2
+
+> hset projekt:1:1 projektnev "EURO-33"
+(integer) 1
+
+> hset projekt:3:2 projektnev "TRANS-22"
+(integer) 1
+
+> zadd dolgozo:nev 1 "Nagy Éva" 2 "Kiss Ilona"
+(integer) 2
+
+> zadd dolgozo:munkakor 1 titkarno 2 konyvelo
+(integer) 2
+
+> set dolgozo:1:nev "Nagy Eva"
+"OK"
+
+> set dolgozo:1:munkakor titkarno
+"OK"
+
+datastax
+CQL console
+desc keyspaces;
+use "Movies";
+select title
+from movies_and_tv
+where type = 'Movie' and release_year = 2018
+limit 5;
+
+SELECT type, release_year, COUNT(*)
+          ... FROM movies_and_tv
+          ... GROUP BY type, release_year
+          ... LIMIT 6;
+
+CREATE TABLE szemely
+          ... (
+          ... nev TEXT,
+          ... szulev int,
+          ... foglalkozas TEXT,
+          ... PRIMARY KEY ((nev, szulev), foglalkozas)
+          ... );
+
+INSERT INTO szemely (nev, szulev, foglalkozas)
+          ... VALUES ('Kiss Bela', 2000, 'lakatos');
+
+INSERT INTO szemely (nev, szulev, foglalkozas)
+          ... VALUES ('Nagy Ivo', 1999, 'diak');
+
+SELECT *
+          ... FROM szemely;
+
+ALTER TABLE szemely
+          ... ADD vegzettseg LIST<TEXT>;
+
+UPDATE szemely
+          ... SET vegzettseg = ['gepesz', 'muszeresz']
+          ... WHERE nev = 'Kiss Bela' AND szulev = 2000
+          ... AND foglalkozas = 'lakatos';
+
+ALTER TABLE szemely
+          ... ADD nyelvtudas SET<TEXT>;
+
+UPDATE szemely
+          ... SET nyelvtudas = {'angol', 'francia'}
+          ... WHERE nev = 'Nagy Ivo' AND szulev = 1999
+          ... AND foglalkozas = 'diak';
+
+TÖRLÉS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+DELETE FROM szemely
+          ... WHERE nev = 'Nagy Ivo' AND szulev = (ELRONTOTT DATUM)
+          ... AND foglalkozas = 'diak';
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+ALTER table szemely
+          ... add autok map<text, text>;
+
+UPDATE szemely SET autok['abc-123'] = 'Audi A8'  WHERE nev = 'Nagy Ivo' AND szulev = 1999 AND foglalkozas = 'diak';
